@@ -26,7 +26,7 @@ import collection.immutable.ListSet
 */
 object ExpandWhens extends Pass {
   def name = "Expand Whens"
-  type NodeMap = mutable.HashMap[MemoizedHash[Expression], String]
+  type NodeMap = mutable.HashMap[Expression, String]
   type Netlist = mutable.LinkedHashMap[WrappedExpression, Expression]
   type Simlist = mutable.ArrayBuffer[Statement]
   // Defaults ideally would be immutable.Map but conversion from mutable.LinkedHashMap to mutable.Map is VERY slow

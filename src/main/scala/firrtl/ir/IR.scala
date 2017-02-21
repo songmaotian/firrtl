@@ -4,9 +4,15 @@ package firrtl
 package ir
 
 import Utils.indent
+import scala.runtime.ScalaRunTime
+
+trait MemoizedHash {
+  self: Product =>
+  override lazy val hashCode: Int = ScalaRunTime._hashCode(self)
+}
 
 /** Intermediate Representation */
-abstract class FirrtlNode {
+abstract class FirrtlNode extends Product with MemoizedHash {
   def serialize: String
 }
 
@@ -328,7 +334,7 @@ class IntWidth(val width: BigInt) extends Width with Product {
     case w: IntWidth => width == w.width
     case _ => false
   }
-  override def hashCode = width.toInt
+  override lazy val hashCode = width.toInt
   override def productPrefix = "IntWidth"
   override def toString = s"$productPrefix($width)"
   def copy(width: BigInt = width) = IntWidth(width)
