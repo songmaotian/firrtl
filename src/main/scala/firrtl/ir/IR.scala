@@ -6,13 +6,12 @@ package ir
 import Utils.indent
 import scala.runtime.ScalaRunTime
 
-trait MemoizedHash {
-  self: Product =>
-  override lazy val hashCode: Int = ScalaRunTime._hashCode(self)
+trait MemoizedHash extends Product {
+  override lazy val hashCode: Int = ScalaRunTime._hashCode(this)
 }
 
 /** Intermediate Representation */
-abstract class FirrtlNode extends Product with MemoizedHash {
+abstract class FirrtlNode extends MemoizedHash {
   def serialize: String
 }
 
